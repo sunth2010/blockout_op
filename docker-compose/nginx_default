@@ -4,19 +4,19 @@ map $http_upgrade $connection_upgrade {
 }
 
 upstream backend {
-    server backend:4000;  # 使用服务名称而不是 IP
+    server 127.0.0.1:4000;  # 修改为本地端口
 }
 
 upstream frontend {
-    server frontend:3000;  # 使用服务名称而不是 IP
+    server 127.0.0.1:3000;  # 修改为本地端口
 }
 
 upstream stats {
-    server stats:8050;  # 使用服务名称而不是 IP
+    server 127.0.0.1:8050;  # 修改为本地端口
 }
 
 upstream visualizer {
-    server visualizer:8051;  # 使用服务名称而不是 IP
+    server 127.0.0.1:8051;  # 修改为本地端口
 }
 
 server {
