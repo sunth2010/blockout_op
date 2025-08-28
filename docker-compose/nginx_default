@@ -4,19 +4,19 @@ map $http_upgrade $connection_upgrade {
 }
 
 upstream backend {
-    server 127.0.0.1:4000;
+    server backend:4000;  # 使用服务名称而不是 IP
 }
 
 upstream frontend {
-    server 127.0.0.1:3000;
+    server frontend:3000;  # 使用服务名称而不是 IP
 }
 
 upstream stats {
-    server 127.0.0.1:8050;
+    server stats:8050;  # 使用服务名称而不是 IP
 }
 
 upstream visualizer {
-    server 127.0.0.1:8051;
+    server visualizer:8051;  # 使用服务名称而不是 IP
 }
 
 server {
