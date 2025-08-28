@@ -14,14 +14,10 @@ upstream visualizer {
     server 127.0.0.1:8051;
 }
 
-map $http_upgrade $connection_upgrade {
-    default upgrade;
-    ''      close;
-}
-
+# 2. 修改server块中的server_name和CORS设置以允许外部访问
 server {
     listen 80;
-    server_name localhost;
+    server_name _;  # 已修改为通配符
     proxy_http_version 1.1;
 
     location ~ ^/(api(?!-docs$)|socket|sitemap.xml|auth/auth0|auth/auth0/callback|auth/logout) {
@@ -51,11 +47,10 @@ server {
 
 server {
     listen 8080;
-    server_name localhost;
-    proxy_http_version 1.1;
+    server_name _;  # 需要从localhost修改为_以允许外部访问
     proxy_hide_header Access-Control-Allow-Origin;
     proxy_hide_header Access-Control-Allow-Methods;
-    add_header 'Access-Control-Allow-Origin' 'http://localhost' always;
+    add_header 'Access-Control-Allow-Origin' '*' always;  # 修改为允许所有来源
     add_header 'Access-Control-Allow-Credentials' 'true' always;
     add_header 'Access-Control-Allow-Methods' 'PUT, GET, POST, OPTIONS, DELETE, PATCH' always;
 
@@ -74,11 +69,10 @@ server {
 
 server {
     listen 8081;
-    server_name localhost;
-    proxy_http_version 1.1;
+    server_name _;  # 需要从localhost修改为_以允许外部访问
     proxy_hide_header Access-Control-Allow-Origin;
     proxy_hide_header Access-Control-Allow-Methods;
-    add_header 'Access-Control-Allow-Origin' 'http://localhost' always;
+    add_header 'Access-Control-Allow-Origin' '*' always;  # 修改为允许所有来源
     add_header 'Access-Control-Allow-Credentials' 'true' always;
     add_header 'Access-Control-Allow-Methods' 'PUT, GET, POST, OPTIONS, DELETE, PATCH' always;
     add_header 'Access-Control-Allow-Headers' 'DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,x-csrf-token' always;
@@ -98,7 +92,7 @@ server {
         proxy_set_header      Connection $connection_upgrade;
         proxy_cache_bypass    $http_upgrade;
         if ($request_method = 'OPTIONS') {
-            add_header 'Access-Control-Allow-Origin' 'http://localhost' always;
+            add_header 'Access-Control-Allow-Origin' '*' always;  # 修改为允许所有来源
             add_header 'Access-Control-Allow-Credentials' 'true' always;
             add_header 'Access-Control-Allow-Methods' 'PUT, GET, POST, OPTIONS, DELETE, PATCH' always;
             add_header 'Access-Control-Allow-Headers' 'DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,x-csrf-token' always;
