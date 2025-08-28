@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "docker down:"
-docker-compose down
+docker-compose -f no-services.yml down
 
 echo
 echo "docker up:"
