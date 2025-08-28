@@ -1,4 +1,8 @@
 #!/bin/bash
 
+echo "docker down:"
 docker-compose down
-docker-compose up --build -d
+
+echo
+echo "docker up:"
+docker compose -f no-services.yml up -d
