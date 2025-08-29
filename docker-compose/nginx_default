@@ -18,8 +18,8 @@ upstream frontend {
 
 # 主服务器配置
 server {
-    listen 80 default_server;  # 确保是默认服务器
-    listen [::]:80 default_server;  # IPv6 支持
+    listen 1180 default_server;  # 确保是默认服务器
+    listen [::]:1180 default_server;  # IPv6 支持
     server_name _;  # 通配符匹配所有域名
     proxy_http_version 1.1;
 
